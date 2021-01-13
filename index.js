@@ -9,19 +9,15 @@ const app = express();
 
 // Configure cors Middleware
 app.use(cors());
+app.use(express.json());
 
 
 // Database
 dbConnection();
 
 // Routes
-app.get('/', (req, res) => {
-    res.status(200).json({
-        ok: true,
-        msg: 'Holsa'
-    });
-});
-
+app.use('/api/usuarios', require('./routes/usuarios'));
+app.use('/api/login', require('./routes/auth'));
 
 app.listen(process.env.PORT, () => {
     console.log('Server on port', process.env.PORT);
