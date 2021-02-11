@@ -27,6 +27,6 @@ router.put('/:id', [
     validarCampos
 ], actualizarUsuario);
 
-router.delete('/:id', validarCampos, borrarUsuario);
+router.delete('/:id', validarJwt, borrarUsuario);
 
 module.exports = router;
