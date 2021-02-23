@@ -3,7 +3,6 @@ const fs = require('fs');
 const { response } = require('express');
 const { v4: uuidv4 } = require('uuid');
 const { actualizarImagen } = require('../helpers/actualizar-imagen');
-const { fstat } = require('fs');
 
 const fileUpload = (req, res=response) => {
 
