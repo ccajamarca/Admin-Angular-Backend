@@ -5,16 +5,18 @@ const getHospitales = async (req, res = response) => {
 
     const hospitales = await Hospital.find()
                                     .populate('usuario','nombre img');
-
     res.json({
-        ok: 'true',
+        ok: true,
         hospitales
-    }); 
+    });
 }
 
 const crearHospital = async (req, res = response) => {
 
     const uid = req.uid;
+
+    console.log({ uid, req: req.body })
+
     const hospital = new Hospital({
         usuario: uid,
         ...req.body
@@ -28,6 +30,7 @@ const crearHospital = async (req, res = response) => {
         });
 
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             ok: false,
             msg: 'Hable con el administrador'
@@ -39,15 +42,15 @@ const crearHospital = async (req, res = response) => {
 const actualizarHospital = async (req, res = response) => {
 
     const id = req.params.id;
-    const userId = req.params.uid;
+    const userId = req.uid;
     
     try {
 
         const hospitalDB = await Hospital.findById(id);
 
         if (!hospitalDB) {
-            return res.json({
-                ok: 'true',
+            return res.status(404).json({
+                ok: true,
                 msg: 'Hospital no encontrado por id',
             }); 
         }
@@ -60,7 +63,7 @@ const actualizarHospital = async (req, res = response) => {
         const hospitalActualizado = await Hospital.findByIdAndUpdate(id, cambiosHospital, { new: true });
         
         res.json({
-            ok: 'true',
+            ok: true,
             hospital: hospitalActualizado
         });    
 
@@ -85,7 +88,7 @@ const borrarHospital = async (req, res = response) => {
 
         if (!hospitalDB) {
             return res.status(404).json({
-                ok: 'true',
+                ok: true,
                 msg: 'Hospital no encontrado por id',
             }); 
         }
@@ -93,7 +96,7 @@ const borrarHospital = async (req, res = response) => {
         await Hospital.findOneAndDelete(id);
         
         res.json({
-            ok: 'true',
+            ok: true,
             msg: 'Hospital Eliminado'
         });    
 

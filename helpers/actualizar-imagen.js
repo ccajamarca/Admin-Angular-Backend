@@ -10,7 +10,7 @@ const borrarImagen = (path) => {
 }
 
 const actualizarImagen = async (tipo, id, imageFileName) => {
-
+    
     let oldPathImage = '';
     switch (tipo) {
         case 'medicos':
